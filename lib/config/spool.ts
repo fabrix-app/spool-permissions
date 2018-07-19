@@ -28,6 +28,7 @@ export const spool = {
        * method is invoked on this Spool
        */
       listen: [
+        'spool:router:configured',
         'spool:sequelize:configured',
         // 'spool:engine:configured',
         'spool:passport:configured',
@@ -38,17 +39,18 @@ export const spool = {
        * List of events emitted by the configure lifecycle method
        */
       emit: [
-        'spool:permission:configured'
+        'spool:permissions:configured'
       ]
     },
     initialize: {
       listen: [
+        'spool:router:initialized',
         'spool:sequelize:initialized',
         // 'spool:engine:initialized',
         'spool:passport:initialized'
       ],
       emit: [
-        'spool:permission:initialized'
+        'spool:permissions:initialized'
       ]
     }
   }

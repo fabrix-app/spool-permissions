@@ -38,7 +38,7 @@ export const Utils = {
         }
       })
     })
-    // console.log('utils.buildRoutesFixtures', fixtures)
+    console.log('utils.buildRoutesFixtures', fixtures)
     return Promise.resolve(fixtures)
   },
 
@@ -84,7 +84,8 @@ export const Utils = {
    * @returns {Promise.<T>}
    */
   loadResources: app => {
-    let resources = app.config.get('permissions.fixtures.resources').concat(app.spools['permission'].routesFixtures.resources)
+    let resources = app.config.get('permissions.fixtures.resources')
+      .concat(app.spools['permissions'].routesFixtures.resources)
     if (app.config.get('permissions.modelsAsResources')) {
       const models = []
       Object.keys(app.models).forEach(modelName => {
@@ -111,10 +112,11 @@ export const Utils = {
    * @returns {*}
    */
   loadPermissions: app => {
-    const permissions = app.config.get('permissions.fixtures.permissions').concat(app.spools['permission'].routesFixtures.permissions)
+    const permissions = app.config.get('permissions.fixtures.permissions')
+      .concat(app.spools['permissions'].routesFixtures.permissions)
     if (permissions.length > 0) {
       app.log.debug('utils.loadPermissions bulkCreate()')
-      return app.models.Permission.bulkCreate(permissions)
+      return app.models['Permission'].bulkCreate(permissions)
     }
   },
 

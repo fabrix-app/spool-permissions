@@ -162,10 +162,10 @@ This spool can manage owner permissions on model instance, to do this you need t
   action: 'create'
 }
 ```
-You can create this permissions with sequelize model, with fixtures options or with PermissionService like this:
+You can create this permissions with sequelize model, with fixtures options or with PermissionsService like this:
  
 ```js
-this.app.services.PermissionService.grant('roleName', 'modelName', 'create', 'owner').then(perm => () => {})
+this.app.services.PermissionsService.grant('roleName', 'modelName', 'create', 'owner').then(perm => () => {})
 .catch(err => this.app.log.error(err))
 ```
 
@@ -231,14 +231,14 @@ Like this you can add `owners` permissions on all preferred models.
 
 WARNING! Currently `owner` permissions are not supported for `update` `destroy` actions on multiple items (with no ID) 
 
-#### Dynamically with PermissionService
+#### Dynamically with PermissionsService
 ```js
 // Grant a permission to create 'modelName' to 'roleName'
-this.app.services.PermissionService.grant('roleName', 'modelName', 'create').then(perm => () => {})
+this.app.services.PermissionsService.grant('roleName', 'modelName', 'create').then(perm => () => {})
 .catch(err => this.app.log.error(err))
 
 // Revoke a permission to create 'modelName' to 'roleName'
-this.app.services.PermissionService.revoke('roleName', 'modelName', 'create').then(perm => () => {})
+this.app.services.PermissionsService.revoke('roleName', 'modelName', 'create').then(perm => () => {})
 .catch(err => this.app.log.error(err))
 ```
 
@@ -261,7 +261,7 @@ Route permissions can be added directly under route definition:
 ```
 When the DB is empty all routes permissions will be created, if you make any change after this you'll have to update permissions yourself.
 
-You can use PermissionService anytime you want to grant or revoke routes permissions.
+You can use PermissionsService anytime you want to grant or revoke routes permissions.
 
 ### Policies 
 You have 2 policies to manage permissions, they return a 403 when user is not allowed : 

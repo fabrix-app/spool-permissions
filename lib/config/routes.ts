@@ -344,7 +344,7 @@ export const routes = {
       }
     }
   },
-  '/user/uploadCSV': {
+  '/users/upload/csv': {
     'POST': 'UserController.uploadCSV',
     config: {
       prefix: 'permissions.prefix',
@@ -353,17 +353,18 @@ export const routes = {
           resource_name: 'apiPostUserUploadCsvRoute',
           roles: ['admin']
         }
-      }
+      },
+      pre: ['UserPolicy.csv']
     }
   },
-  '/user/processUpload/:id': {
+  '/users/upload/process/:uploadId': {
     'POST': 'UserController.processUpload',
     config: {
       prefix: 'permissions.prefix',
       validate: {
         params: {
           // this will only ever be a string
-          id: joi.string()
+          uploadId: joi.string()
         }
       },
       app: {

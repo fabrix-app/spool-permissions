@@ -6,11 +6,11 @@ const assert = require('assert')
 describe('Permission', () => {
   it('should exist', () => {
     assert(global.app.api.models['Permission'])
-    assert(global.app.orm['Permission'])
+    assert(global.app.models['Permission'])
   })
   it('should add Permissions', () => {
 
-    return global.app.orm.Permission.bulkCreate([{
+    return global.app.models.Permission.bulkCreate([{
       role_name: 'admin',
       resource_name: 'res1',
       action: 'create'

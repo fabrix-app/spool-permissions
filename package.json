@@ -1,8 +1,8 @@
 {
-  "name": "@fabrix/spool-permission",
+  "name": "@fabrix/spool-permissions",
   "version": "1.1.0",
   "description": "Spool: Permissions (ACL) for Fabrix using Spool-Passport",
-  "homepage": "https://github.com/fabrix-app/spool-passport",
+  "homepage": "https://fabrix.app",
   "author": {
     "name": "Scott Wyatt",
     "email": "scottwyatt86@gmail.com",
@@ -46,15 +46,15 @@
     "shortid": "^2.2.8"
   },
   "devDependencies": {
-    "@fabrix/fabrix": "^1.1.0",
+    "@fabrix/fabrix": "^1.1.1",
     "@fabrix/lint": "^1.0.0-alpha.3",
     "@fabrix/spool-email": "^1.1.0",
-    "@fabrix/spool-express": "^1.1.2",
+    "@fabrix/spool-express": "^1.1.3",
     "@fabrix/spool-i18n": "^1.1.0",
-    "@fabrix/spool-passport": "^1.1.0",
-    "@fabrix/spool-router": "^1.1.0",
+    "@fabrix/spool-passport": "^1.1.1",
+    "@fabrix/spool-router": "^1.1.2",
     "@fabrix/spool-sequelize": "^1.1.0",
-    "@fabrix/spool-tapestries": "^1.1.0",
+    "@fabrix/spool-tapestries": "^1.1.2",
     "@types/lodash": "^4.14.109",
     "@types/node": "~10.3.4",
     "express": "4.15.2",
@@ -73,13 +73,13 @@
     "typescript": "~2.8.1"
   },
   "peerDependencies": {
-    "@fabrix/fabrix": "^1.1.0",
-    "@fabrix/spool-express": "^1.1.2",
-    "@fabrix/spool-router": "^1.1.1",
+    "@fabrix/fabrix": "^1.1.1",
+    "@fabrix/spool-express": "^1.1.3",
+    "@fabrix/spool-router": "^1.1.2",
     "@fabrix/spool-i18n": "^1.1.0",
     "@fabrix/spool-sequelize": "^1.1.0",
     "@fabrix/spool-email": "^1.1.0",
-    "@fabrix/spool-passport": "^1.1.0"
+    "@fabrix/spool-passport": "^1.1.1"
   },
   "engines": {
     "node": ">= 7.6.0"

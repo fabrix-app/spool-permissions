@@ -11,6 +11,8 @@ import * as api from './api/index'
 
 export class PermissionsSpool extends Spool {
 
+  public routesFixtures
+
   constructor(app) {
     super(app, {
       config: config,

@@ -10,7 +10,7 @@ describe('Admin UserController', () => {
   before((done) => {
     request = supertest('http://localhost:3000')
     adminUser = supertest.agent(global.app.spools.express.server)
-
+    console.log(global.app.routes) //, global.app.config.entries())
     adminUser
       .post('/api/auth/local')
       .set('Accept', 'application/json') //set header for this test
@@ -45,13 +45,13 @@ describe('Admin UserController', () => {
   })
   it('It should upload user_upload.csv', (done) => {
     adminUser
-      .post('/api/user/uploadCSV')
+      .post('/api/users/upload/csv')
       .attach('file', 'test/fixtures/user_upload.csv')
       .expect(200)
       .end((err, res) => {
-        console.log('BROKE upload body', err, res.body)
         assert.ok(res.body.result.upload_id)
         uploadID = res.body.result.upload_id
+        assert(uploadID)
         assert.equal(res.body.result.users, 1)
         done(err)
       })
@@ -59,7 +59,7 @@ describe('Admin UserController', () => {
   it('It should process upload', (done) => {
     console.log('UPLOAD ID', uploadID)
     adminUser
-      .post(`/api/user/processUpload/${ uploadID }`)
+      .post(`/api/users/upload/process/${ uploadID }`)
       .send({})
       .expect(200)
       .end((err, res) => {

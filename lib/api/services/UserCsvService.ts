@@ -84,12 +84,14 @@ export class UserCsvService extends Service {
   csvUserRow(row, uploadID) {
     // console.log(row)
     const UserUpload = this.app.models.UserUpload
-    const values = _.values(Enums.USER_UPLOAD)
-    const keys = _.keys(Enums.USER_UPLOAD)
+    const values = Object.values(Enums.USER_UPLOAD)
+    const keys = Object.keys(Enums.USER_UPLOAD)
     const upload = {
       upload_id: uploadID,
       options: {}
     }
+
+    console.log('BROKE upload', upload)
 
     _.each(row, (data, key) => {
       if (data === '') {
@@ -117,6 +119,7 @@ export class UserCsvService extends Service {
         }
       }
     })
+
 
     const newUser = UserUpload.build(upload)
     return newUser.save()

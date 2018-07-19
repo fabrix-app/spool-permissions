@@ -22,7 +22,7 @@ describe('CheckPermissionsPolicy', () => {
         agentId = res.body.user.id
 
         global.app.services.TapestryService.find('user', res.body.user.id).then(user => {
-          return global.app.services.PermissionService.addRoleToUser(user, 'test')
+          return global.app.services.PermissionsService.addRoleToUser(user, 'test')
         }).then(user => done()).catch(done)
       })
   })
@@ -49,7 +49,7 @@ describe('CheckPermissionsPolicy', () => {
   describe('CheckModelPermissions', () => {
 
     it('should check Model permissions on tapestries', () => {
-      return global.app.services.PermissionService.grant('test', 'apiGetRolesRoute', 'access')
+      return global.app.services.PermissionsService.grant('test', 'apiGetRolesRoute', 'access')
         .then(perms => {
           return new Promise((resolve, reject) => {
             agent.get('/api/roles')
@@ -100,7 +100,7 @@ describe('CheckPermissionsPolicy', () => {
   })
   describe('CheckRoutePermissions', () => {
     it('should allow to access Route with granted permissions for non logged users', done => {
-      request.get('/success/public/permissions')
+      request.get('/api/success/public/permissions')
         .expect(200)
         .end((err, res) => {
           done(err)
@@ -108,7 +108,7 @@ describe('CheckPermissionsPolicy', () => {
     })
 
     it('should not allow to access Route with no permissions for non logged users', done => {
-      request.get('/failure/public/permissions')
+      request.get('/api/failure/public/permissions')
         .set('Accept', 'application/json') //set header for this test
         .expect(403)
         .end((err, res) => {
@@ -119,7 +119,7 @@ describe('CheckPermissionsPolicy', () => {
     })
 
     it('should allow to access Route with granted permissions for logged users', done => {
-      agent.get('/success/logged/permissions')
+      agent.get('/api/success/logged/permissions')
         .expect(200)
         .end((err, res) => {
           done(err)
@@ -127,7 +127,7 @@ describe('CheckPermissionsPolicy', () => {
     })
 
     it('should not allow to access Route with no permissions for non logged users', done => {
-      agent.get('/failure/logged/permissions')
+      agent.get('/api/failure/logged/permissions')
         .set('Accept', 'application/json') //set header for this test
         .expect(403)
         .end((err, res) => {
@@ -152,7 +152,7 @@ describe('CheckPermissionsPolicy', () => {
           assert.ok(res.body.user.id)
           // console.log('THIS USER', res.body.user.id)
           global.app.services.TapestryService.find('user', res.body.user.id).then(user => {
-            return global.app.services.PermissionService.addRoleToUser(user, 'admin')
+            return global.app.services.PermissionsService.addRoleToUser(user, 'admin')
           }).then(user => {
             return global.app.services.TapestryService.create('item', {
               name: 'test'

@@ -6,10 +6,10 @@ const assert = require('assert')
 describe('Resource', () => {
   it('should exist', () => {
     assert(global.app.api.models['Resource'])
-    assert(global.app.orm['Resource'])
+    assert(global.app.models['Resource'])
   })
   it('should add Resources', () => {
-    return global.app.orm.Resource.bulkCreate([{
+    return global.app.models.Resource.bulkCreate([{
       type: 'model',
       name: 'res1',
       public_name: 'Res1'
@@ -30,7 +30,7 @@ describe('Resource', () => {
   })
 
   it('should add models as Resources automatically', () => {
-    return global.app.orm.Resource.find({
+    return global.app.models.Resource.findOne({
       where: {
         name: 'user'
       }

@@ -144,7 +144,8 @@ const App = {
   },
   config: {
     router: {
-      prefix: '/api'
+      prefix: '/api',
+      // sortOrder: 'desc'
     },
     stores: stores,
     models: {
@@ -214,7 +215,7 @@ const App = {
       }
     },
     permissions: {
-      prefix: '/api',
+      // prefix: '/api',
       defaultRole: 'public',
       defaultRegisteredRole: 'registered',
       modelsAsResources: true,
@@ -299,11 +300,11 @@ const App = {
       controllers: {
         ignore: ['UserController', 'RoleController', 'AuthController', 'EventController']
       },
-      prefix: '/api'
+      // prefix: '/api'
     },
     policies: {
       '*': ['CheckPermissionsPolicy.checkRoute'],
-      // 'UserController': ['CheckPermissionsPolicy.checkRoute'],
+      // 'UserController': ['UserPolicy.csv'],
       'TapestryController': ['CheckPermissionsPolicy.checkModel']
     },
     main: {

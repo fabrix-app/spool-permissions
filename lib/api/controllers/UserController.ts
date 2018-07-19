@@ -252,9 +252,8 @@ export class UserController extends Controller {
    * @param res
    */
   processUpload(req, res) {
-    console.log('BROKE!', req.params.id)
     const UserCsvService = this.app.services.UserCsvService
-    UserCsvService.processUserUpload(req.params.id)
+    UserCsvService.processUserUpload(req.params.uploadId)
       .then(result => {
         return res.json(result)
       })
