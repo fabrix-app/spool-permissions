@@ -46,7 +46,7 @@ export class UserCsvService extends Service {
               parser.resume()
             })
             .catch(err => {
-              console.log(err)
+              this.app.log.error(err)
               parser.resume()
             })
         },
