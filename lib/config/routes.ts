@@ -354,7 +354,7 @@ export const routes = {
           roles: ['admin']
         }
       },
-      pre: ['UserPolicy.csv']
+      pre: ['User.csv']
     }
   },
   '/users/upload/process/:uploadId': {

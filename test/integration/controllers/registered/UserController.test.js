@@ -22,7 +22,6 @@ describe('Registered UserController', () => {
         assert.ok(res.body.user.id)
         done(err)
       })
-    done()
   })
 
   it('should exist', () => {
@@ -44,7 +43,7 @@ describe('Registered UserController', () => {
   })
   it.skip('should not upload user_upload.csv', (done) => {
     registeredUser
-      .post('/api/user/uploadCSV')
+      .post('/api/users/upload/csv')
       .attach('file', 'test/fixtures/user_upload.csv')
       .expect(403)
       .end((err, res) => {
@@ -54,7 +53,7 @@ describe('Registered UserController', () => {
   it('should not process upload', (done) => {
     // console.log('UPLOAD ID', uploadID)
     registeredUser
-      .post('/api/user/processUpload/1')
+      .post('/api/users/upload/process/1')
       .send({})
       .expect(403)
       .end((err, res) => {

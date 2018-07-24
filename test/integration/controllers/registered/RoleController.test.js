@@ -22,7 +22,6 @@ describe('Registered RoleController', () => {
         assert.ok(res.body.user.id)
         done(err)
       })
-    done()
   })
 
   it('should exist', () => {

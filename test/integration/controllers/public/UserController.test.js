@@ -19,7 +19,7 @@ describe('Public UserController', () => {
     assert(global.app.controllers['UserController'])
   })
 
-  it('It should update the user\'s name', (done) => {
+  it('It should not update the user\'s name', (done) => {
     publicUser
       .post('/api/user')
       .set('Accept', 'application/json') //set header for this test
@@ -33,7 +33,7 @@ describe('Public UserController', () => {
   })
   it.skip('should not upload user_upload.csv', (done) => {
     publicUser
-      .post('/api/user/uploadCSV')
+      .post('/api/users/upload/csv')
       .attach('file', 'test/fixtures/user_upload.csv')
       .expect(403)
       .end((err, res) => {
@@ -43,7 +43,7 @@ describe('Public UserController', () => {
   it('should not process upload', (done) => {
     // console.log('UPLOAD ID', uploadID)
     publicUser
-      .post('/api/user/processUpload/1')
+      .post('/api/users/upload/process/1')
       .send({})
       .expect(403)
       .end((err, res) => {

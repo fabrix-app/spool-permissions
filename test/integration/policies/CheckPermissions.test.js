@@ -4,7 +4,7 @@
 const assert = require('assert')
 const supertest = require('supertest')
 
-describe('CheckPermissionsPolicy', () => {
+describe('CheckPermissions', () => {
   let request, agent, agentId
 
   before(done => {
@@ -28,8 +28,8 @@ describe('CheckPermissionsPolicy', () => {
   })
 
   it('should exist', () => {
-    assert(global.app.api.policies['CheckPermissionsPolicy'])
-    assert(global.app.policies['CheckPermissionsPolicy'])
+    assert(global.app.api.policies['CheckPermissions'])
+    assert(global.app.policies['CheckPermissions'])
   })
 
   describe('SuperAdmin', () => {
@@ -82,7 +82,7 @@ describe('CheckPermissionsPolicy', () => {
         .set('Accept', 'application/json') //set header for this test
         .expect(200)
         .end((err, res) => {
-          assert.equal(res.body.length, 47)
+          assert.equal(res.body.length, 44)
           done(err)
         })
     })
@@ -113,7 +113,7 @@ describe('CheckPermissionsPolicy', () => {
         .expect(403)
         .end((err, res) => {
           assert.equal(res.body.code, 'E_FORBIDDEN')
-          assert.equal(res.body.message, 'You don\'t have permissions to access /failure/public/permissions')
+          assert.equal(res.body.message, 'You don\'t have permissions to access /api/failure/public/permissions')
           done(err)
         })
     })
@@ -132,7 +132,7 @@ describe('CheckPermissionsPolicy', () => {
         .expect(403)
         .end((err, res) => {
           assert.equal(res.body.code, 'E_FORBIDDEN')
-          assert.equal(res.body.message, 'You don\'t have permissions to access /failure/logged/permissions')
+          assert.equal(res.body.message, 'You don\'t have permissions to access /api/failure/logged/permissions')
           done(err)
         })
     })
@@ -172,7 +172,7 @@ describe('CheckPermissionsPolicy', () => {
         .set('Accept', 'application/json') //set header for this test
         .expect(200)
         .end((err, res) => {
-          console.log(res.body)
+          console.log('broke', res.body)
           assert.equal(res.body.length, 1)
           assert.equal(res.body[0].id, 1)
           assert.equal(res.body[0].name, 'test')

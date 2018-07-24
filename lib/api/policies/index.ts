@@ -1,2 +1,2 @@
-export { CheckPermissionsPolicy } from './CheckPermissionsPolicy'
-export { UserPolicy } from './UserPolicy'
+export { CheckPermissions } from './CheckPermissions'
+export { User } from './User'

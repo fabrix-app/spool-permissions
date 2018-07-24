@@ -1,14 +1,16 @@
 import { FabrixApp } from '@fabrix/fabrix'
-import { FabrixModel as Model } from '@fabrix/fabrix/dist/common'
-import { SequelizeResolver } from '@fabrix/spool-sequelize'
-import { merge } from 'lodash'
+import {
+  User as PassportUser,
+  UserResolver as PassportUserResolver
+} from '@fabrix/spool-passport/dist/api/models/User'
+import { merge, defaultsDeep } from 'lodash'
 import { queryDefaults } from '../utils'
 
 export interface User {
   resolveRoles(app: FabrixApp, options): any
 }
 
-export class UserResolver extends SequelizeResolver {
+export class UserResolver extends PassportUserResolver {
   findByIdDefault(criteria, options = {}) {
     options = merge(options, queryDefaults.User.default(this.app))
     return this.findById(criteria, options)
@@ -20,10 +22,10 @@ export class UserResolver extends SequelizeResolver {
   }
 }
 
-export class User extends Model {
+export class User extends PassportUser {
 
   static config(app, Sequelize) {
-    return {
+    return defaultsDeep(PassportUser.config, {
       options: {
         underscored: true,
         hooks: {
@@ -38,11 +40,7 @@ export class User extends Model {
           ]
         }
       }
-    }
-  }
-
-  static schema(app, Sequelize) {
-    return {}
+    })
   }
 
   public static get resolver () {
@@ -52,6 +50,7 @@ export class User extends Model {
   // If you need associations, put them here
   // More information about associations here: http://docs.sequelizejs.com/en/latest/docs/associations/
   public static associate(models) {
+    PassportUser.associate(models)
     models.User.belongsToMany(models.Role, {
       as: 'roles',
       through: {

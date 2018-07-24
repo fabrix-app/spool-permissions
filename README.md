@@ -76,29 +76,25 @@ export const permissions = {
 You also need to have a User model like: 
 
 ```js
-const Model = require('fabrix-model')
-const ModelPassport = require('spool-proxy-passport/api/models/User') // If you use spool-pasport
-const ModelPermissions = require('spool-permission/api/models/User')
-class User extends Model {
+import { User as PermissionsUser } from '@fabrix/spool-permissions/dist/models'
+import { defaults, defaultsDeep } from 'lodash'
+
+class User extends PermissionsUser {
   static config(app, Sequelize) {
-    return {
+    return defaultsDeep(PermissionsUser.config, {
       options: {
-        classMethods: {
-          associate: (models) => {
-            // Apply passport specific stuff
-            ModelPassport.config(app, Sequelize).options.classMethods.associate(models) 
-            // Apply permission specific stuff
-            ModelPermissions.config(app, Sequelize).options.classMethods.associate(models)
-            // Apply your specific stuff
-          }
-        }
+        // your options
       }
-    }
+    })
   }
   static schema(app, Sequelize) {
-    return {
-     // your stuff
-    }
+    return defaults(PermissionsUser.schema, {
+     // your schema
+    })
+  }
+  static associate(models) {
+    PermissionsUser.associate(models)
+    // your associations
   }
 }
 ```
@@ -182,7 +178,7 @@ export class Item extends Model {
     return SequelizeResolver
   }
 
-  associate (models) {
+  public static associate (models) {
     models.Item.belongsToMany(models.User, {
       as: 'owners',
       through: 'UserItem'//If many to many is needed
@@ -194,39 +190,29 @@ If the model is under a spool and you don't have access to it you can add a mode
 let's do this for the model User witch is already in spool-permission and spool-proxy-passport:
  
 ```js
-const ModelPassport = require('spool-proxy-passport/api/models/User')
-const ModelPermissions = require('../api/models/User')
-import { FabrixModel as Model } from  '@fabrix/fabrix/dist/common'
-import { SequelizeResolver } from '@fabrix/spool-sequelize'
-export class User extends Model {
+import { User as PermissionsUser } from '@fabrix/spool-permissions/dist/models'
+import { defaults, defaultsDeep } from 'lodash'
+
+class User extends PermissionsUser {
   static config(app, Sequelize) {
-    return {
+    return defaultsDeep(PermissionsUser.config, {
       options: {
-        classMethods: {
-          associate: (models) => {
-            ModelPassport.config(app, Sequelize).options.classMethods.associate(models)
-            ModelPermissions.config(app, Sequelize).options.classMethods.associate(models)
-            models.User.belongsToMany(models.Item, {
-              as: 'items',
-              through: 'UserItem'
-            })
-          }
-        }
+        // your options
       }
-    }
+    })
   }
   static schema(app, Sequelize) {
-    const UserSpoolSchema = ModelPassport.schema(app, Sequelize)
-    let schema = {
-      //All your attributes here
-    }
-    return _.defaults(UserSpoolSchema, schema)//merge passport attributs with your
+    return defaults(PermissionsUser.schema, {
+     // your schema
+    })
   }
-  static get resolver() {
-    return SequelizeResolver
+  static associate(models) {
+    PermissionsUser.associate(models)
+    // your associations
   }
 }
 ```
+
 Like this you can add `owners` permissions on all preferred models.
 
 WARNING! Currently `owner` permissions are not supported for `update` `destroy` actions on multiple items (with no ID) 
@@ -245,18 +231,20 @@ this.app.services.PermissionsService.revoke('roleName', 'modelName', 'create').t
 ### Manage route permissions
 Route permissions can be added directly under route definition: 
 ```js
-{
-  method: 'GET',
-  path: '/api/myroute',
-  handler: 'DefaultController.myroute',
-  config: {
-    app: {
-      permissions: {
-        resourceName: 'myrouteId',
-        roles: ['roleName']
+export const routes = {
+  // ...
+  '/api/myroute': {
+    'GET': 'DefaultController.myroute',
+    config: {
+      app: {
+        permissions: {
+          resourceName: 'myrouteId',
+          roles: ['roleName']
+        }
       }
     }
   }
+  // ...
 }
 ```
 When the DB is empty all routes permissions will be created, if you make any change after this you'll have to update permissions yourself.
@@ -266,23 +254,23 @@ You can use PermissionsService anytime you want to grant or revoke routes permis
 ### Policies 
 You have 2 policies to manage permissions, they return a 403 when user is not allowed : 
 
-#### CheckPermissionsPolicy.checkRoute
+#### CheckPermissions.checkRoute
 This one will check your route permissions, if they are no explicit permissions then the route _is_ accessible. 
 The easy way to setup is : 
 
 ```js
 //config/policies.ts
-'*': [ 'CheckPermissionsPolicy.checkRoute' ]
+'*': [ 'CheckPermissions.checkRoute' ]
 //or
-ViewController: [ 'CheckPermissionsPolicy.checkRoute' ] 
+ViewController: [ 'CheckPermissions.checkRoute' ] 
 
 ```
 
-#### CheckPermissionsPolicy.checkModel
+#### CheckPermissions.checkModel
 This one will check your model permissions, if there are no explicit permissions models _are not_ accessible
 ```js
 //config/policies.ts
-TapestryController: [ 'CheckPermissionsPolicy.checkModel' ] // To check permissions on models
+TapestryController: [ 'CheckPermissions.checkModel' ] // To check permissions on models
 ```
 
 [npm-image]: https://img.shields.io/npm/v/spool-permissions.svg?style=flat-square

@@ -4,14 +4,14 @@ import * as _ from 'lodash'
 
 /**
  * @module UserController
- * @description Generated Fabrix.js Controller.
+ * @description Generated Fabrix Controller.
  */
 export class UserController extends Controller {
   generalStats(req, res) {
     res.json({})
   }
   /**
-   * count the amount of user
+   * count the amount of users
    * @param req
    * @param res
    */
@@ -27,6 +27,12 @@ export class UserController extends Controller {
         return res.serverError(err)
       })
   }
+
+  /**
+   * Find a user by id
+   * @param req
+   * @param res
+   */
   findById(req, res) {
     const orm = this.app.models
     const User = orm['User']
@@ -99,7 +105,6 @@ export class UserController extends Controller {
     })
       .then(users => {
         res.paginate(users.count, limit, offset, sort)
-        // return res.json(users.rows)
         return this.app.services.PermissionsService.sanitizeResult(req, users.rows)
       })
       .then(result => {

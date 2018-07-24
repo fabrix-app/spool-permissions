@@ -1,16 +1,15 @@
 import { FabrixPolicy as Policy } from '@fabrix/fabrix/dist/common'
-import * as _ from 'lodash'
+import { get } from 'lodash'
 
 /**
- * @module CheckPermissionsPolicy
+ * @module CheckPermissions
  * @description Check permission on the route or model
  */
-export class CheckPermissionsPolicy extends Policy {
+export class CheckPermissions extends Policy {
   checkModel(req, res, next) {
     const modelName = req.params.model
     const user = req.user
     const defaultRole = this.app.config.get('permissions.defaultRole')
-    // console.log('modelName', modelName)
     let action = 'access'
     if (req.method === 'POST') {
       action = 'create'
@@ -49,7 +48,7 @@ export class CheckPermissionsPolicy extends Policy {
                 }
                 else {
                   req.query.populate = [{
-                    model: this.app.models.User,
+                    model: this.app.models.User.resolver.sequelizeModel,
                     as: 'owners',
                     required: true,
                     where: {id: req.user.id}
@@ -112,8 +111,7 @@ export class CheckPermissionsPolicy extends Policy {
     const user = req.user
     const defaultRole = this.app.config.get('permissions.defaultRole')
 
-    const permissionsConfig = _.get(req.route, 'config.app.permissions')
-    console.log('BROKE HERE', req.route, permissionsConfig)
+    const permissionsConfig = get(req.route, 'config.app.permissions')
 
     if (!permissionsConfig) {
       return next()

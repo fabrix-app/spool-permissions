@@ -19,7 +19,7 @@ describe('Admin UserController', () => {
       .end((err, res) => {
         // console.log('BROKE',err, res.body)
         userID = res.body.user.id
-        console.log(res.body)
+        // console.log(res.body)
         done(err)
       })
   })
@@ -57,7 +57,7 @@ describe('Admin UserController', () => {
       })
   })
   it('It should process upload', (done) => {
-    console.log('UPLOAD ID', uploadID)
+    // console.log('UPLOAD ID', uploadID)
     adminUser
       .post(`/api/users/upload/process/${ uploadID }`)
       .send({})

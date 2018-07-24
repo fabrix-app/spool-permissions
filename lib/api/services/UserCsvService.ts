@@ -90,9 +90,6 @@ export class UserCsvService extends Service {
       upload_id: uploadID,
       options: {}
     }
-
-    console.log('BROKE upload', upload)
-
     _.each(row, (data, key) => {
       if (data === '') {
         row[key] = null

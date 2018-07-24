@@ -81,17 +81,17 @@ const App = {
       }
     },
     models: {
-      User: class User extends ModelPassport {
+      User: class User extends ModelPermissions {
         static config(app, Sequelize) {
-          return {
+          return _.defaultsDeep(ModelPermissions.config, {
             options: {
               underscored: true
             }
-          }
+          })
         }
 
         static associate(models) {
-          ModelPassport.associate(models)
+          // ModelPassport.associate(models)
           ModelPermissions.associate(models)
           models.User.belongsToMany(models.Item, {
             as: 'items',
@@ -144,8 +144,7 @@ const App = {
   },
   config: {
     router: {
-      prefix: '/api',
-      // sortOrder: 'desc'
+      prefix: '/api'
     },
     stores: stores,
     models: {
@@ -215,7 +214,6 @@ const App = {
       }
     },
     permissions: {
-      // prefix: '/api',
       defaultRole: 'public',
       defaultRegisteredRole: 'registered',
       modelsAsResources: true,
@@ -299,13 +297,17 @@ const App = {
     tapestries: {
       controllers: {
         ignore: ['UserController', 'RoleController', 'AuthController', 'EventController']
-      },
-      // prefix: '/api'
+      }
     },
     policies: {
-      '*': ['CheckPermissionsPolicy.checkRoute'],
-      // 'UserController': ['UserPolicy.csv'],
-      'TapestryController': ['CheckPermissionsPolicy.checkModel']
+      '*': {
+        '*': ['CheckPermissions.checkRoute']
+      },
+      'TapestryController': {
+        '*': {
+          '*': ['CheckPermissions.checkModel']
+        }
+      }
     },
     main: {
       spools: [
@@ -314,7 +316,6 @@ const App = {
         require('@fabrix/spool-express').ExpressSpool,
         require('@fabrix/spool-sequelize').SequelizeSpool,
         require('@fabrix/spool-passport').PassportSpool,
-        // require('@fabrix/spool-engine').EngineSpool,
         require('../../dist/index').PermissionsSpool // spool
       ]
     },

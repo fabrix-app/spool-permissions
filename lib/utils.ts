@@ -12,9 +12,8 @@ export const Utils = {
       resources: [],
       permissions: []
     }
-    Object.keys(app.routes).forEach(path => {
-
-      const route = app.routes[path]
+    app.routes.forEach((route, path) => {
+      // const route = app.routes[path]
       const routeMethods = Object.keys(route).filter(value => -1 !== RouterUtils.methods.indexOf(value))
 
       routeMethods.forEach(method => {
@@ -38,7 +37,7 @@ export const Utils = {
         }
       })
     })
-    console.log('utils.buildRoutesFixtures', fixtures)
+    // console.log('utils.buildRoutesFixtures', fixtures)
     return Promise.resolve(fixtures)
   },
 

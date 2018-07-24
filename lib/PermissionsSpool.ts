@@ -41,13 +41,14 @@ export class PermissionsSpool extends Spool {
       return Promise.reject(new Error('No configuration found at config.passport!'))
     }
 
-    if (
-      this.app.config.get('policies')
-      && this.app.config.get('policies')['*']
-      && this.app.config.get('policies')['*'].indexOf('CheckPermissionsPolicy.checkRoute') === -1
-    ) {
-      this.app.log.warn('Permissions Routes are unlocked! add \'*\' : [\'CheckPermissionsPolicy.checkRoute\'] to config/policies.ts')
-    }
+    // TODO REWRITE
+    // if (
+    //   this.app.config.get('policies')
+    //   && this.app.config.get('policies')['*']
+    //   && this.app.config.get('policies')['*'].indexOf('CheckPermissions.checkRoute') === -1
+    // ) {
+    //   this.app.log.warn('Permissions Routes are unlocked! add \'*\' : [\'CheckPermissions.checkRoute\'] to config/policies.ts')
+    // }
     return Promise.all([
       validateStores.config(this.app.config.get('stores')),
       validateConfig.validateConfig(this.app.config.get('permissions')),

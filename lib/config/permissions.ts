@@ -1,6 +1,6 @@
 export const permissions = {
   // Prefix the routes
-  prefix: '',
+  prefix: null,
   // Role name to use for anonymous users
   defaultRole: null,
   // Role to Grant on user create
