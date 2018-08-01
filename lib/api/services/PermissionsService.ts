@@ -140,7 +140,7 @@ export class PermissionsService extends Service {
     return User.resolve(reqUser, { transaction: options.transaction || null })
       .then(user => {
         resUser = user
-        return resUser.resolveRoles(this.app, {transaction: options.transaction || null})
+        return resUser.resolveRoles({transaction: options.transaction || null})
       })
       .then(() => {
         return resUser.hasRole(roleName, {transaction: options.transaction || null})
@@ -169,7 +169,7 @@ export class PermissionsService extends Service {
     return User.resolve(reqUser, { transaction: options.transaction || null })
       .then(user => {
         resUser = user
-        return resUser.resolveRoles(this.app, {transaction: options.transaction || null})
+        return resUser.resolveRoles({transaction: options.transaction || null})
       })
       .then(() => {
         return resUser.hasRole(roleName, {transaction: options.transaction || null})
@@ -198,7 +198,7 @@ export class PermissionsService extends Service {
       return this.app.models['User'].resolve(req.user, {transaction: options.transaction || null})
         .then(user => {
           resUser = user
-          return resUser.resolveRoles(this.app, {transaction: options.transaction || null})
+          return resUser.resolveRoles({transaction: options.transaction || null})
         })
         .then(() => {
           return resUser.roles.map(r => r.name)

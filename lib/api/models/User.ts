@@ -6,10 +6,6 @@ import {
 import { merge, defaultsDeep } from 'lodash'
 import { queryDefaults } from '../utils'
 
-export interface User {
-  resolveRoles(app: FabrixApp, options): any
-}
-
 export class UserResolver extends PassportUserResolver {
   findByIdDefault(criteria, options = {}) {
     options = merge(options, queryDefaults.User.default(this.app))
@@ -73,10 +69,17 @@ export class User extends PassportUser {
 
 }
 
-User.prototype.resolveRoles = function(app, options = {}) {
+export interface User {
+  resolveRoles(options): any
+}
+
+/**
+ *
+ */
+User.prototype.resolveRoles = function(options = {}) {
   if (
     this.roles
-    && this.roles.every(t => t instanceof app.models['Role'].resolver.sequelizeModel)
+    && this.roles.every(t => t instanceof this.app.models['Role'].instance)
     && options.reload !== true
   ) {
     return Promise.resolve(this)
