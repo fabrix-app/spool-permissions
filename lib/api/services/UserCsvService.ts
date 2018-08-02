@@ -36,10 +36,6 @@ export class UserCsvService extends Service {
         header: true,
         dynamicTyping: true,
         step: (results, parser) => {
-          // console.log(parser)
-          // console.log('Row data:', results.data)
-          // TODO handle errors
-          // console.log('Row errors:', results.errors)
           parser.pause()
           return this.csvUserRow(results.data[0], uploadID)
             .then(row => {
@@ -52,7 +48,6 @@ export class UserCsvService extends Service {
         },
         complete: (results, _file) => {
           console.timeEnd('csv')
-          // console.log('Parsing complete:', results, file)
           results.upload_id = uploadID
           this.app.models.UserUpload.count({ where: { upload_id: uploadID }})
             .then(count => {
@@ -82,7 +77,6 @@ export class UserCsvService extends Service {
    * @param uploadID
    */
   csvUserRow(row, uploadID) {
-    // console.log(row)
     const UserUpload = this.app.models.UserUpload
     const values = Object.values(Enums.USER_UPLOAD)
     const keys = Object.keys(Enums.USER_UPLOAD)
@@ -137,8 +131,7 @@ export class UserCsvService extends Service {
           upload_id: uploadId
         }
       }, users => {
-        const Sequelize = this.app.models.User.resolver.sequelizeModel.sequelize
-        // console.log('BROKE', Object.getOwnPropertyNames(this.app.models.User.resolver.sequelizeModel))
+        const Sequelize = this.app.models.User.datastore
 
         return Sequelize.Promise.mapSeries(users, user => {
 

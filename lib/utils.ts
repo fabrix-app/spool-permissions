@@ -37,7 +37,7 @@ export const Utils = {
         }
       })
     })
-    // console.log('utils.buildRoutesFixtures', fixtures)
+    // app.log.debug('utils.buildRoutesFixtures', fixtures)
     return Promise.resolve(fixtures)
   },
 
