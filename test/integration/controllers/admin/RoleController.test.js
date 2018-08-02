@@ -19,7 +19,7 @@ describe('RoleController', () => {
       .end((err, res) => {
         // console.log('BROKE',err, res.body)
         userID = res.body.user.id
-        console.log(res.body)
+        // console.log(res.body)
         done(err)
       })
   })

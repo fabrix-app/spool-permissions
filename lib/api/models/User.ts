@@ -7,12 +7,12 @@ import { merge, defaultsDeep } from 'lodash'
 import { queryDefaults } from '../utils'
 
 export class UserResolver extends PassportUserResolver {
-  findByIdDefault(criteria, options = {}) {
+  findByIdDefault(criteria, options: {[key: string]: any} = {}) {
     options = merge(options, queryDefaults.User.default(this.app))
     return this.findById(criteria, options)
   }
 
-  findOneDefault(options = {}) {
+  findOneDefault(options: {[key: string]: any} = {}) {
     options = merge(options, queryDefaults.User.default(this.app))
     return this.findOne(options)
   }
@@ -21,12 +21,13 @@ export class UserResolver extends PassportUserResolver {
 export class User extends PassportUser {
 
   static config(app, Sequelize) {
-    return defaultsDeep(PassportUser.config, {
+    return defaultsDeep({}, PassportUser.config(app, Sequelize), {
       options: {
         underscored: true,
         hooks: {
           afterCreate: [
             (values, options) => {
+              console.log()
               return app.services.PermissionsService.addRoleToUser(
                 values,
                 app.config.get('permissions.defaultRegisteredRole'),

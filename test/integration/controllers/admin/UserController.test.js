@@ -10,7 +10,7 @@ describe('Admin UserController', () => {
   before((done) => {
     request = supertest('http://localhost:3000')
     adminUser = supertest.agent(global.app.spools.express.server)
-    console.log(global.app.routes) //, global.app.config.entries())
+    // console.log(global.app.routes) //, global.app.config.entries())
     adminUser
       .post('/api/auth/local')
       .set('Accept', 'application/json') //set header for this test
@@ -114,9 +114,10 @@ describe('Admin UserController', () => {
       .expect(200)
       .end((err, res) => {
         assert.equal(res.body.id, userID)
-        assert.equal(res.body.roles.length, 2)
+        assert.equal(res.body.roles.length, 3)
         assert.equal(res.body.roles[0].name, 'admin')
-        assert.equal(res.body.roles[1].name, 'test')
+        assert.equal(res.body.roles[1].name, 'registered')
+        assert.equal(res.body.roles[2].name, 'test')
         done(err)
       })
   })
@@ -128,8 +129,9 @@ describe('Admin UserController', () => {
       .end((err, res) => {
         // console.log('THIS USER',res.body)
         assert.equal(res.body.id, userID)
-        assert.equal(res.body.roles.length, 1)
+        assert.equal(res.body.roles.length, 2)
         assert.equal(res.body.roles[0].name, 'admin')
+        assert.equal(res.body.roles[1].name, 'registered')
         done(err)
       })
   })
@@ -152,13 +154,14 @@ describe('Admin UserController', () => {
         assert.equal(_.isNumber(parseInt(res.headers['x-pagination-page'])), true)
         assert.equal(_.isNumber(parseInt(res.headers['x-pagination-pages'])), true)
 
-        assert.equal(res.headers['x-pagination-total'], '1')
+        assert.equal(res.headers['x-pagination-total'], '2')
         assert.equal(res.headers['x-pagination-offset'], '0')
         assert.equal(res.headers['x-pagination-limit'], '10')
         assert.equal(res.headers['x-pagination-page'], '1')
         assert.equal(res.headers['x-pagination-pages'], '1')
-        assert.equal(res.body.length, 1)
+        assert.equal(res.body.length, 2)
         assert.equal(res.body[0].name, 'admin')
+        assert.equal(res.body[1].name, 'registered')
         done(err)
       })
   })
@@ -169,7 +172,6 @@ describe('Admin UserController', () => {
       .set('Accept', 'application/json') //set header for this test
       .expect(200)
       .end((err, res) => {
-        // console.log('THIS USER', res.body)
         assert.ok(res.headers['x-pagination-total'])
         assert.ok(res.headers['x-pagination-pages'])
         assert.ok(res.headers['x-pagination-page'])

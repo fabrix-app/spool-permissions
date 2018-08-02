@@ -172,7 +172,7 @@ describe('CheckPermissions', () => {
         .set('Accept', 'application/json') //set header for this test
         .expect(200)
         .end((err, res) => {
-          console.log('broke', res.body)
+          // console.log('broke', res.body)
           assert.equal(res.body.length, 1)
           assert.equal(res.body[0].id, 1)
           assert.equal(res.body[0].name, 'test')

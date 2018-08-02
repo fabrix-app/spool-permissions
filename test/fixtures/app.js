@@ -83,7 +83,7 @@ const App = {
     models: {
       User: class User extends ModelPermissions {
         static config(app, Sequelize) {
-          return _.defaultsDeep(ModelPermissions.config, {
+          return _.defaultsDeep({}, ModelPermissions.config(app, Sequelize), {
             options: {
               underscored: true
             }

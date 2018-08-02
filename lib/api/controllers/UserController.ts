@@ -43,22 +43,22 @@ export class UserController extends Controller {
     User.findById(id, {
       include: [
         {
-          model: this.app.models['Passport'].resolver.sequelizeModel,
+          model: this.app.models['Passport'].instance,
           as: 'passports'
         },
         {
-          model: this.app.models['Role'].resolver.sequelizeModel,
+          model: this.app.models['Role'].instance,
           as: 'roles'
         },
         {
-          model: this.app.models['Event'].resolver.sequelizeModel,
+          model: this.app.models['Event'].instance,
           as: 'events'
         }
       ],
       order: [
         [
           {
-            model: this.app.models['Event'].resolver.sequelizeModel,
+            model: this.app.models['Event'].instance,
             as: 'events'
           },
           'created_at', 'DESC'
@@ -98,7 +98,7 @@ export class UserController extends Controller {
       where: where,
       include: [
         {
-          model: this.app.models['Role'].resolver.sequelizeModel,
+          model: this.app.models['Role'].instance,
           as: 'roles'
         }
       ]
@@ -156,10 +156,12 @@ export class UserController extends Controller {
           // }
         ]
       },
+      distinct: true,
       include: [
         {
-          model: this.app.models['Role'].resolver.sequelizeModel,
-          as: 'roles'
+          model: this.app.models['Role'].instance,
+          as: 'roles',
+          duplicating: false
         }
       ]
     })
@@ -204,7 +206,6 @@ export class UserController extends Controller {
     if (!id && req.user) {
       id = req.user.id
     }
-    // console.log('this user',id, req.user)
     this.app.models['User'].findById(id)
       .then(user => {
 
@@ -307,7 +308,7 @@ export class UserController extends Controller {
       },
       include: [
         {
-          model: this.app.models['User'].resolver.sequelizeModel,
+          model: this.app.models['User'].instance,
           as: 'users',
           attributes: ['id'],
           duplicating: false
