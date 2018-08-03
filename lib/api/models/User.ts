@@ -1,10 +1,11 @@
-import { FabrixApp } from '@fabrix/fabrix'
 import {
   User as PassportUser,
   UserResolver as PassportUserResolver
 } from '@fabrix/spool-passport/dist/api/models/User'
 import { merge, defaultsDeep } from 'lodash'
 import { queryDefaults } from '../utils'
+
+import { Utils } from '@fabrix/spool-sequelize'
 
 export class UserResolver extends PassportUserResolver {
   findByIdDefault(criteria, options: {[key: string]: any} = {}) {
@@ -20,8 +21,8 @@ export class UserResolver extends PassportUserResolver {
 
 export class User extends PassportUser {
 
-  static config(app, Sequelize) {
-    return defaultsDeep({}, PassportUser.config(app, Sequelize), {
+  static config(app, Sequelize): {[key: string]: any} {
+    return Utils.mergeConfig(PassportUser.config(app, Sequelize), {
       options: {
         underscored: true,
         hooks: {

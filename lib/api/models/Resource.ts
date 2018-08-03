@@ -2,7 +2,7 @@ import { FabrixModel as Model } from '@fabrix/fabrix/dist/common'
 import { SequelizeResolver } from '@fabrix/spool-sequelize'
 
 export class Resource extends Model {
-  public static config(app, Sequelize) {
+  public static config(app, Sequelize): {[key: string]: any} {
     return {
       // More information about supported models options here : http://docs.sequelizejs.com/en/latest/docs/models-definition/#configuration
       options: {
@@ -11,7 +11,7 @@ export class Resource extends Model {
     }
   }
 
-  public static schema(app, Sequelize) {
+  public static schema(app, Sequelize): {[key: string]: any} {
     return {
       type: {
         type: Sequelize.ENUM,

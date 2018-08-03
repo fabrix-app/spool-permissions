@@ -25,7 +25,7 @@ export class Event extends Model {
     }
   }
 
-  static schema (app, Sequelize?) {
+  static schema (app, Sequelize?): {[key: string]: any} {
     return {
       // The Target Model or object
       object: {

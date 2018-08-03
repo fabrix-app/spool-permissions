@@ -179,6 +179,17 @@ const App = {
           }
         }
       },
+      '/success/all/permissions': {
+        'GET': 'TestController.success',
+        config: {
+          app: {
+            permissions: {
+              resource_name: 'successAllRoute',
+              roles: ['admin', 'registered', 'public']
+            }
+          }
+        }
+      },
       '/failure/public/permissions': {
         'GET': 'TestController.failure',
         config: {
