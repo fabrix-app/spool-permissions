@@ -7,7 +7,7 @@ import { SequelizeResolver } from '@fabrix/spool-sequelize'
  */
 export class UserItem extends Model {
 
-  static config (app, Sequelize) {
+  static config (app, Sequelize): {[key: string]: any} {
     return {
       options: {
         underscored: true
@@ -15,7 +15,7 @@ export class UserItem extends Model {
     }
   }
 
-  static schema (app, Sequelize) {
+  static schema (app, Sequelize): {[key: string]: any} {
     return {
       // Record ID
       id: {

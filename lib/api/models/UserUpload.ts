@@ -36,7 +36,7 @@ export class UserUploadResolver extends SequelizeResolver {
  */
 export class UserUpload extends Model {
 
-  static config (app, Sequelize) {
+  static config (app, Sequelize): {[key: string]: any} {
     return {
       // migrate: 'drop', // override default models configurations if needed
       // store: 'uploads',
@@ -46,7 +46,7 @@ export class UserUpload extends Model {
     }
   }
 
-  static schema (app, Sequelize) {
+  static schema (app, Sequelize): {[key: string]: any} {
     return {
       // Upload ID
       upload_id: {

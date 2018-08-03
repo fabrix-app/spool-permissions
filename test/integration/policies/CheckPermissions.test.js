@@ -82,7 +82,7 @@ describe('CheckPermissions', () => {
         .set('Accept', 'application/json') //set header for this test
         .expect(200)
         .end((err, res) => {
-          assert.equal(res.body.length, 44)
+          assert.equal(res.body.length, 47)
           done(err)
         })
     })
@@ -101,6 +101,14 @@ describe('CheckPermissions', () => {
   describe('CheckRoutePermissions', () => {
     it('should allow to access Route with granted permissions for non logged users', done => {
       request.get('/api/success/public/permissions')
+        .expect(200)
+        .end((err, res) => {
+          done(err)
+        })
+    })
+
+    it('should allow to access Route with granted permissions for non logged users', done => {
+      request.get('/api/success/all/permissions')
         .expect(200)
         .end((err, res) => {
           done(err)
