@@ -18,5 +18,9 @@ export const permissions = {
   // The default super admin username
   defaultAdminUsername: 'admin',
   // The default super admin password
-  defaultAdminPassword: 'admin1234'
+  defaultAdminPassword: 'admin1234',
+  // Send Emails
+  emails: {},
+  // Allow Events
+  events: {}
 }

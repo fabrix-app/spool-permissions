@@ -326,16 +326,13 @@ const App = {
         require('@fabrix/spool-tapestries').TapestriesSpool,
         require('@fabrix/spool-express').ExpressSpool,
         require('@fabrix/spool-sequelize').SequelizeSpool,
+        require('@fabrix/spool-events').EventsSpool,
         require('@fabrix/spool-passport').PassportSpool,
         require('../../dist/index').PermissionsSpool // spool
       ]
     },
     session: {
       secret: 'ok'
-    },
-    engine: {
-      live_mode: false,
-      profile: 'test'
     },
     web: {
       express: require('express'),
