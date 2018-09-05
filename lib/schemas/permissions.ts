@@ -12,5 +12,7 @@ export const permissions = joi.object().keys({
     permissions: joi.array()
   }).required(),
   defaultAdminUsername: joi.string().required(),
-  defaultAdminPassword: joi.string().required()
+  defaultAdminPassword: joi.string().required(),
+  emails: joi.object(),
+  events: joi.object()
 })
