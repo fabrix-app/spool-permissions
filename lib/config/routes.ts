@@ -9,7 +9,7 @@ export const routes = {
         query: {
           offset: joi.number(),
           limit: joi.number(),
-          sort: joi.string(),
+          sort: joi.array().items(joi.array()),
           where: joi.object()
         }
       },
@@ -70,7 +70,7 @@ export const routes = {
         query: {
           offset: joi.number(),
           limit: joi.number(),
-          sort: joi.string(),
+          sort: joi.array().items(joi.array()),
           where: joi.object()
         }
       },
@@ -320,7 +320,7 @@ export const routes = {
         query: {
           offset: joi.number(),
           limit: joi.number(),
-          sort: joi.string(),
+          sort: joi.array().items(joi.array()),
           term: joi.any()
         }
       },

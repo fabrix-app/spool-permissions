@@ -1,6 +1,6 @@
 {
   "name": "@fabrix/spool-permissions",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Spool: Permissions (ACL) for Fabrix using Spool-Passport",
   "homepage": "https://fabrix.app",
   "author": {
