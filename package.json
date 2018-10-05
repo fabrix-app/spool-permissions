@@ -34,7 +34,8 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "archetype"
   ],
   "pre-commit": [
     "test"
